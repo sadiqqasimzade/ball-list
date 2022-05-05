@@ -37,8 +37,8 @@ function resetBallPos()
 
 //#region ball
 ballw.addEventListener('blur', () => {
-    if (ballw.value > 0)
-        if (ballw.value < boxw.value) {
+    if (Number( ballw.value) > 0)
+        if (Number( ballw.value) < Number( boxw.value)) {
             ball.style.width = ballw.value+"px";
             resetBallPos();
             return true;
@@ -54,8 +54,8 @@ ballw.addEventListener('blur', () => {
 });
 
 ballh.addEventListener('blur', () => {
-    if (ballh.value > 0)
-        if (ballh.value < boxh.value){
+    if (Number( ballh.value) > 0)
+        if (Number(ballh.value) < Number(boxh.value)){
             ball.style.height = ballh.value+"px";
             resetBallPos();
             return true;
@@ -72,9 +72,9 @@ ballh.addEventListener('blur', () => {
 //#endregion
 
 step.addEventListener('blur', () => {
-    if (step.value > 0)
-        if (step.value < boxw.value)
-            if (step.value < boxh.value)
+    if (Number(step.value) > 0)
+        if (Number(step.value) < Number(boxw.value))
+            if (Number(step.value) < Number(boxh.value))
                 return true;
             else {
                 alert("Step cant be greater than box-h" + boxh.value);
@@ -90,8 +90,8 @@ step.addEventListener('blur', () => {
 
 //#region box
 boxw.addEventListener('blur', () => {
-    if (boxw.value > 0)
-        if (boxw.value > ballw.value){
+    if (Number(boxw.value) > 0)
+        if (Number(boxw.value) > Number(ballw.value)){
             box.style.width=boxw.value+"px";
             resetBallPos();
             return true;
@@ -107,8 +107,8 @@ boxw.addEventListener('blur', () => {
 });
 
 boxh.addEventListener('blur', () => {
-    if (boxh.value > 0)
-        if (boxh.value > ballh.value){
+    if (Number(boxh.value) > 0)
+        if (Number(boxh.value) > Number(ballh.value)){
             box.style.height=boxh.value+"px";
             resetBallPos();
             return true;
@@ -198,4 +198,32 @@ function checkDistanceLeft(val) {
 function checkDistanceTop(val) {
     if (parseFloat(box.style.height) / 2 - parseFloat(ball.style.height) / 2 >= val) return true;
     return false;
+}
+
+
+
+document.querySelector("body").onkeydown = function(e){
+    if (e.key == "ArrowUp") {
+        if (checkDistanceTop(-(parseFloat(ball.style.top) - step.value))) {
+            ball.style.top = parseFloat(ball.style.top) - step.value + "px";
+            updErr();
+        }
+    }
+    if (e.key == "ArrowDown") {
+        if (checkDistanceTop(parseFloat(ball.style.top) + Number(step.value))) {
+            ball.style.top = parseFloat(ball.style.top) + Number(step.value) + "px";
+            updErr();
+        }
+    }
+    if (e.key == "ArrowLeft"){
+        if (checkDistanceLeft(-(parseFloat(ball.style.left) - step.value))) {
+            ball.style.left = parseFloat(ball.style.left) - step.value + "px";
+            updErr();
+        }
+    }
+    if (e.key == "ArrowRight"){
+        if (checkDistanceLeft(parseFloat(ball.style.left) + Number(step.value)))
+        ball.style.left = parseFloat(ball.style.left) + Number(step.value) + "px";
+    updErr();
+    }
 }
